@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solana MCP Server</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #9945FF;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #9945FF;
+      margin-top: 0;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      overflow: auto;
+    }
+    code {
+      font-family: 'Courier New', monospace;
+    }
+    .endpoint {
+      margin-bottom: 30px;
+    }
+    .method {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .get {
+      background-color: #61affe;
+      color: white;
+    }
+    .post {
+      background-color: #49cc90;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .status {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .status.online {
+      color: green;
+    }
+    .status.offline {
+      color: red;
+    }
+    .test-section {
+      margin-top: 30px;
+    }
+    button {
+      background-color: #9945FF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #7d37d6;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .response {
+      margin-top: 20px;
+    }
+    #testResponse {
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Solana MCP Server</h1>
+    <p>A Model Context Protocol server for Solana blockchain interaction</p>
+  </header>
+
+  <div class="card">
+    <h2>Server Status</h2>
+    <div id="serverStatus" class="status offline">Checking server status...</div>
+    <div id="networkInfo"></div>
+  </div>
+
+  <div class="card">
+    <h2>API Documentation</h2>
+    
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /api/network</h3>
+      <p>Get current Solana network status</p>
+      <h4>Response Example:</h4>
+      <pre><code>{
+  "network": "devnet",
+  "version": "1.14.17",
+  "currentSlot": 166368417,
+  "blockTime": "2023-04-12T15:30:45.000Z"
+}</code></pre>
+    </div>
+
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /api/balance/:address</h3>
+      <p>Get SOL balance for a Solana address</p>
+      <h4>Parameters:</h4>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>address</td>
+          <td>string</td>
+          <td>Solana public key (address)</td>
+        </tr>
+      </table>
+      <h4>Response Example:</h4>
+      <pre><code>{
+  "address": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp",
+  "balance": 2.5
+}</code></pre>
+    </div>
+
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /api/transactions/:address</h3>
+      <p>Get recent transactions for a Solana address</p>
+      <h4>Parameters:</h4>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>address</td>
+          <td>string</td>
+          <td>Solana public key (address)</td>
+        </tr>
+        <tr>
+          <td>limit</td>
+          <td>number</td>
+          <td>Optional. Maximum number of transactions to fetch (default: 10)</td>
+        </tr>
+      </table>
+      <h4>Response Example:</h4>
+      <pre><code>{
+  "address": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp",
+  "transactions": [
+    {
+      "signature": "5UfgccP6hpM2wfdPRwUbXxqG2ysGMUkEPRZGhbLVUVHiY2bsNQXVqbvjzkr9kx8J9FfmyEQ8GivZK6SMTub86wHZ",
+      "timestamp": "2023-04-12T14:53:24.000Z",
+      "status": "confirmed",
+      "slot": 166366789
+    }
+  ]
+}</code></pre>
+    </div>
+
+    <div class="endpoint">
+      <h3><span class="method post">POST</span> /api/wallet/create</h3>
+      <p>Create a new Solana wallet</p>
+      <h4>Response Example:</h4>
+      <pre><code>{
+  "publicKey": "9JxsFJGsEHStk1Lp7pAf71KqxTNa5bfaAYjwJ71GmeCY",
+  "privateKey": "base64_encoded_private_key"
+}</code></pre>
+    </div>
+
+    <div class="endpoint">
+      <h3><span class="method post">POST</span> /api/transfer</h3>
+      <p>Transfer SOL between addresses</p>
+      <h4>Request Body:</h4>
+      <pre><code>{
+  "from": "9JxsFJGsEHStk1Lp7pAf71KqxTNa5bfaAYjwJ71GmeCY",
+  "to": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp",
+  "amount": 0.1,
+  "privateKey": "base58_encoded_private_key"
+}</code></pre>
+      <h4>Response Example:</h4>
+      <pre><code>{
+  "success": true,
+  "signature": "5UfgccP6hpM2wfdPRwUbXxqG2ysGMUkEPRZGhbLVUVHiY2bsNQXVqbvjzkr9kx8J9FfmyEQ8GivZK6SMTub86wHZ",
+  "message": "Transferred 0.1 SOL from 9JxsFJGsEHStk1Lp7pAf71KqxTNa5bfaAYjwJ71GmeCY to ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp"
+}</code></pre>
+    </div>
+
+    <div class="endpoint">
+      <h3><span class="method post">POST</span> /api/mcp/execute</h3>
+      <p>Execute Solana operations via MCP</p>
+      <h4>Request Body:</h4>
+      <pre><code>{
+  "action": "getBalance",
+  "parameters": {
+    "address": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp"
+  }
+}</code></pre>
+      <h4>Response Example:</h4>
+      <pre><code>{
+  "action": "getBalance",
+  "result": 2.5
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="card test-section">
+    <h2>Test API</h2>
+    <div>
+      <label for="endpoint">Endpoint:</label>
+      <select id="endpoint">
+        <option value="/api/network">GET /api/network</option>
+        <option value="/api/balance">GET /api/balance/:address</option>
+        <option value="/api/transactions">GET /api/transactions/:address</option>
+        <option value="/api/wallet/create">POST /api/wallet/create</option>
+        <option value="/api/mcp/execute">POST /api/mcp/execute</option>
+      </select>
+      
+      <div id="parameterInputs">
+        <!-- Dynamic inputs will be added here based on selected endpoint -->
+      </div>
+      
+      <div id="requestBody" style="display: none;">
+        <label for="requestBodyInput">Request Body (JSON):</label>
+        <textarea id="requestBodyInput" rows="5"></textarea>
+      </div>
+      
+      <button id="sendRequest">Send Request</button>
+      
+      <div class="response">
+        <h3>Response:</h3>
+        <pre id="testResponse">Select an endpoint and click "Send Request"</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check server status
+    async function checkServerStatus() {
+      try {
+        const response = await fetch('/api/network');
+        const data = await response.json();
+        
+        const statusEl = document.getElementById('serverStatus');
+        const networkInfoEl = document.getElementById('networkInfo');
+        
+        if (response.ok) {
+          statusEl.className = 'status online';
+          statusEl.textContent = 'Server is online';
+          
+          networkInfoEl.innerHTML = `
+            <p><strong>Network:</strong> ${data.network}</p>
+            <p><strong>Version:</strong> ${data.version}</p>
+            <p><strong>Current Slot:</strong> ${data.currentSlot}</p>
+            <p><strong>Block Time:</strong> ${data.blockTime}</p>
+          `;
+        } else {
+          statusEl.className = 'status offline';
+          statusEl.textContent = 'Server error: ' + data.error;
+        }
+      } catch (error) {
+        const statusEl = document.getElementById('serverStatus');
+        statusEl.className = 'status offline';
+        statusEl.textContent = 'Server is offline or unreachable';
+      }
+    }
+    
+    // Update parameter inputs based on selected endpoint
+    function updateParameterInputs() {
+      const endpoint = document.getElementById('endpoint').value;
+      const parameterInputsEl = document.getElementById('parameterInputs');
+      const requestBodyEl = document.getElementById('requestBody');
+      
+      parameterInputsEl.innerHTML = '';
+      
+      if (endpoint === '/api/balance' || endpoint === '/api/transactions') {
+        const addressInput = document.createElement('div');
+        addressInput.innerHTML = `
+          <label for="addressInput">Address:</label>
+          <input type="text" id="addressInput" placeholder="Enter Solana address">
+        `;
+        parameterInputsEl.appendChild(addressInput);
+        
+        if (endpoint === '/api/transactions') {
+          const limitInput = document.createElement('div');
+          limitInput.innerHTML = `
+            <label for="limitInput">Limit:</label>
+            <input type="number" id="limitInput" placeholder="Number of transactions" value="10">
+          `;
+          parameterInputsEl.appendChild(limitInput);
+        }
+        
+        requestBodyEl.style.display = 'none';
+      } else if (endpoint === '/api/wallet/create') {
+        // No parameters needed
+        requestBodyEl.style.display = 'none';
+      } else if (endpoint === '/api/mcp/execute') {
+        requestBodyEl.style.display = 'block';
+        document.getElementById('requestBodyInput').value = JSON.stringify({
+          "action": "getNetworkStatus",
+          "parameters": {}
+        }, null, 2);
+      } else {
+        // /api/network - no parameters
+        requestBodyEl.style.display = 'none';
+      }
+    }
+    
+    // Send API request
+    async function sendRequest() {
+      const endpoint = document.getElementById('endpoint').value;
+      const responseEl = document.getElementById('testResponse');
+      
+      responseEl.textContent = 'Loading...';
+      
+      try {
+        let url = endpoint;
+        let options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        
+        // Add parameters or request body based on endpoint
+        if (endpoint === '/api/balance') {
+          const address = document.getElementById('addressInput').value;
+          if (!address) {
+            responseEl.textContent = 'Error: Address is required';
+            return;
+          }
+          url = `/api/balance/${address}`;
+        } else if (endpoint === '/api/transactions') {
+          const address = document.getElementById('addressInput').value;
+          const limit = document.getElementById('limitInput').value;
+          if (!address) {
+            responseEl.textContent = 'Error: Address is required';
+            return;
+          }
+          url = `/api/transactions/${address}?limit=${limit}`;
+        } else if (endpoint === '/api/wallet/create') {
+          options.method = 'POST';
+        } else if (endpoint === '/api/mcp/execute') {
+          options.method = 'POST';
+          try {
+            const requestBody = JSON.parse(document.getElementById('requestBodyInput').value);
+            options.body = JSON.stringify(requestBody);
+          } catch (error) {
+            responseEl.textContent = 'Error: Invalid JSON in request body';
+            return;
+          }
+        }
+        
+        const response = await fetch(url, options);
+        const data = await response.json();
+        
+        responseEl.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        responseEl.textContent = `Error: ${error.message}`;
+      }
+    }
+    
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check server status initially and every 30 seconds
+      checkServerStatus();
+      setInterval(checkServerStatus, 30000);
+      
+      // Set up event listeners
+      document.getElementById('endpoint').addEventListener('change', updateParameterInputs);
+      document.getElementById('sendRequest').addEventListener('click', sendRequest);
+      
+      // Initialize parameter inputs
+      updateParameterInputs();
+    });
+  </script>
+</body>
+</html>
