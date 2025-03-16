@@ -2,6 +2,8 @@
 
 This is an MCP server that allows large language models (LLMs) like Claude to interact with the Solana blockchain. The service provides a set of APIs and WebSocket interfaces that enable AI models to perform operations such as querying balances, sending tokens, retrieving transaction history, creating custom PumpFun tokens, and more.
 
+**Live Service:** The MCP service is now live and accessible at [https://mcp.so/](https://mcp.so/)
+
 ## Features
 
 - Provides REST API endpoints for Solana blockchain interaction
@@ -13,6 +15,16 @@ This is an MCP server that allows large language models (LLMs) like Claude to in
 - Custom PumpFun token creation capability
 
 ## Quick Start
+
+### Using the Deployed Service
+
+The easiest way to get started is to use our deployed MCP service:
+
+1. Access the service at [https://mcp.so/](https://mcp.so/)
+2. Use the test interface to try out the available features
+3. Integrate with your AI applications using the API endpoints
+
+### Self-Hosting
 
 ### Prerequisites
 
