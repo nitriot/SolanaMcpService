@@ -105,7 +105,7 @@ Get the SOL balance for a specified address.
 **Response:**
 ```json
 {
-  "address": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp",
+  "address": "B4QLphqm5gwfzpo8ibW1EmpoyQwoQybj5v7vJRvXoZn6",
   "balance": 12.34,
   "unit": "SOL"
 }
@@ -145,7 +145,7 @@ Create a new Solana wallet (including public and private keys).
 **Response:**
 ```json
 {
-  "publicKey": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp",
+  "publicKey": "B4QLphqm5gwfzpo8ibW1EmpoyQwoQybj5v7vJRvXoZn6",
   "secretKey": "[base58 encoded private key]"
 }
 ```
@@ -162,7 +162,7 @@ Send SOL from one address to another.
 ```json
 {
   "fromSecretKey": "[base58 encoded private key]",
-  "toAddress": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp",
+  "toAddress": "B4QLphqm5gwfzpo8ibW1EmpoyQwoQybj5v7vJRvXoZn6",
   "amount": 0.05
 }
 ```
@@ -186,7 +186,7 @@ Get detailed account information for an address.
 **Response:**
 ```json
 {
-  "address": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp",
+  "address": "B4QLphqm5gwfzpo8ibW1EmpoyQwoQybj5v7vJRvXoZn6",
   "lamports": 12340000000,
   "executable": false,
   "owner": "11111111111111111111111111111111",
@@ -256,7 +256,7 @@ This service is specifically designed to support AI models like Claude in intera
 {
   "action": "getBalance",
   "parameters": {
-    "address": "ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp"
+    "address": "B4QLphqm5gwfzpo8ibW1EmpoyQwoQybj5v7vJRvXoZn6"
   }
 }
 ```
