@@ -210,7 +210,7 @@ Create a custom PumpFun token on the Solana blockchain.
     "name": "My Token Name",
     "symbol": "MTN",
     "description": "This is my custom token",
-    "twitter": "https://x.com/ArcReactor9x",
+    "twitter": "https://x.com/xxx",
     "telegram": "https://t.me/xxx",
     "website": "https://mywebsite.com",
     "amount": "0.1",
