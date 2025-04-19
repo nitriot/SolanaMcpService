@@ -78,7 +78,7 @@ function exampleWebSocketRequests() {
             requestId: 'req-2',
             action: 'getBalance',
             parameters: {
-              address: 'ALJtSfWkr7kCJeXEDikxVfYxSShU9b6gWe19RSVVdXrp'
+              address: 'B4QLphqm5gwfzpo8ibW1EmpoyQwoQybj5v7vJRvXoZn6'
             }
           }
         }));
