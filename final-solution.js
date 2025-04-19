@@ -1,4 +1,4 @@
-// Final solution for creating PumpFun tokens based on official example
+// Final solution for creating PumpFun tokens based on official examples
 
 import { Connection, Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { PumpFunSDK } from 'pumpdotfun-sdk';
