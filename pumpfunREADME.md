@@ -171,7 +171,7 @@ main();
 ```
 
 
-### PumpDotFunSDK Class
+### PumpDotFun SDK Class
 
 The `PumpDotFunSDK` class provides methods to interact with the PumpFun protocol. Below are the method signatures and their descriptions.
 
