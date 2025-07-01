@@ -1,5 +1,7 @@
 # Solana MCP (Model Context Protocol) Server
 
+[![smithery badge](https://smithery.ai/badge/@nitriot/solanamcpservice)](https://smithery.ai/server/@nitriot/solanamcpservice)
+
 This is an MCP server that allows large language models (LLMs) like Claude to interact with the Solana blockchain. The service provides a set of APIs and WebSocket interfaces that enable AI models to perform operations such as querying balances, sending tokens, retrieving transaction history, creating custom PumpFun tokens, and more.
 
 **Live Service:** The MCP service is now live and accessible at [https://mcp.so/](https://mcp.so/)
@@ -26,13 +28,21 @@ The easiest way to get started is to use our deployed MCP service:
 
 ### Self-Hosting
 
-### Prerequisites
+#### Installing via Smithery
+
+To install solanamcpservice for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@nitriot/solanamcpservice):
+
+```bash
+npx -y @smithery/cli install @nitriot/solanamcpservice --client claude
+```
+
+#### Prerequisites
 
 - Node.js (v14+)
 - npm or yarn
 - Solana CLI tools (optional, for advanced testing)
 
-### Installation
+#### Installation
 
 1. Clone this repository and install dependencies:
 
