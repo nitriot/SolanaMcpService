@@ -1,0 +1,29 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config
+
+startCommand:
+  type: stdio
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => {
+      const env = {};
+      if (config.solanaNetwork) env.SOLANA_NETWORK = config.solanaNetwork;
+      if (config.pumpfunPrivateKey) env.PUMPFUN_PRIVATE_KEY = config.pumpfunPrivateKey;
+      return { command: 'node', args: ['src/mcp-server-new.js'], env };
+    }
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required: []
+    properties:
+      solanaNetwork:
+        type: string
+        default: devnet
+        description: Solana network
+      pumpfunPrivateKey:
+        type: string
+        default: ""
+        description: PumpFun private key
+  exampleConfig:
+    solanaNetwork: devnet
+    pumpfunPrivateKey: ""
